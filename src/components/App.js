@@ -4,7 +4,6 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,6 +38,16 @@ const App = () => {
         return `${moment(end).diff(start, delimiter)} ${delimiter}`;
     };
 
+    const getTimeDifferenceFromNow = start => {
+        const diff = moment().diff(start) / 1000;
+
+        let delimiter = 'hours';
+        if (diff < 60) delimiter = 'minutes';
+        else if (diff < 3600) delimiter = 'seconds';
+
+        return Math.floor(moment.duration(moment.now() - start).asSeconds()) + ' ' + delimiter;
+    };
+
     const toggleFast = () => {
         var newStartValue = currentFast.start ? false : getUnixTimeStamp();
 
@@ -59,14 +68,12 @@ const App = () => {
 
     return (
         <div className="App">
-            <CssBaseline />
-
             <Paper>
                 <Typography variant="h1">FastApp</Typography>
 
-                {currentFast.start && <Typography>Current fast start: {getCalendarTimeFromUnixStamp(currentFast.start)}.</Typography>}
+                {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
 
-                {!currentFast.start && <Typography>No fast started.</Typography>}
+                {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
 
                 <Button size="large" variant="contained" raised color="primary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />

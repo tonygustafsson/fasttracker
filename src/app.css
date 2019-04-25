@@ -1,0 +1,17 @@
+body {
+    width: 80%;
+    margin: 1em auto;
+}
+
+.App > div {
+    margin: 1em;
+    padding: 2em;
+}
+
+button {
+    margin: 1em 0 !important;
+}
+
+button svg {
+    margin-right: 0.5em;
+}
