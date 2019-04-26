@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import useLocalStorage from '../hooks/useLocalStorage';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,13 @@ const App = () => {
     const [currentFast, changeCurrentFast] = useLocalStorage('currentFast', {
         start: false
     });
+    const [tick, updateTick] = useState(moment().unix());
+
+    useEffect(() => {}, [tick, currentFast.start]);
+
+    setInterval(() => {
+        updateTick(moment().unix());
+    }, 1000);
 
     const getUnixTimeStamp = () => {
         return (
@@ -23,10 +30,6 @@ const App = () => {
                 .unix()
                 .toString() * 1000
         );
-    };
-
-    const getCalendarTimeFromUnixStamp = unix => {
-        return moment(unix).calendar();
     };
 
     const getTimeFromUnixStamp = unix => {
@@ -41,11 +44,13 @@ const App = () => {
     const getTimeDifferenceFromNow = start => {
         const diff = moment().diff(start) / 1000;
 
-        let delimiter = 'hours';
-        if (diff < 60) delimiter = 'minutes';
-        else if (diff < 3600) delimiter = 'seconds';
-
-        return Math.floor(moment.duration(moment.now() - start).asSeconds()) + ' ' + delimiter;
+        if (diff > 60) {
+            return Math.floor(moment.duration(moment.now() - start).asMinutes()) + ' minutes';
+        } else if (diff > 3600) {
+            return Math.floor(moment.duration(moment.now() - start).asHours()) + ' hours';
+        } else {
+            return Math.floor(moment.duration(moment.now() - start).asSeconds()) + ' seconds';
+        }
     };
 
     const toggleFast = () => {
@@ -75,7 +80,7 @@ const App = () => {
 
                 {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
 
-                <Button size="large" variant="contained" raised color="primary" onClick={() => toggleFast()}>
+                <Button size="large" variant="contained" color="primary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
                     {currentFast.start ? 'Stop fast' : 'Start fast'}
                 </Button>
@@ -87,18 +92,23 @@ const App = () => {
 
                     <Table>
                         <TableHead>
-                            <TableCell>Start</TableCell>
-                            <TableCell>End</TableCell>
-                            <TableCell>Duration</TableCell>
+                            <TableRow>
+                                <TableCell>Start</TableCell>
+                                <TableCell>End</TableCell>
+                                <TableCell>Duration</TableCell>
+                            </TableRow>
                         </TableHead>
                         <TableBody>
-                            {fasts.reverse().map(fast => (
-                                <TableRow>
-                                    <TableCell key={fast.start}>{getTimeFromUnixStamp(fast.start)}</TableCell>
-                                    <TableCell>{getTimeFromUnixStamp(fast.end)}</TableCell>
-                                    <TableCell>{getHoursDifference(fast.start, fast.end)}</TableCell>
-                                </TableRow>
-                            ))}
+                            {fasts
+                                .slice()
+                                .reverse()
+                                .map(fast => (
+                                    <TableRow key={fast.start}>
+                                        <TableCell>{getTimeFromUnixStamp(fast.start)}</TableCell>
+                                        <TableCell>{getTimeFromUnixStamp(fast.end)}</TableCell>
+                                        <TableCell>{getHoursDifference(fast.start, fast.end)}</TableCell>
+                                    </TableRow>
+                                ))}
                         </TableBody>
                     </Table>
                 </Paper>
