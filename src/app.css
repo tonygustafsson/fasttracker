@@ -1,6 +1,23 @@
 body {
-    width: 80%;
+    width: 98%;
     margin: 1em auto;
+    font-size: 16px;
+}
+
+@media (min-width: 1000px) {
+    body {
+        width: 80%;
+        margin: 1em auto;
+    }
+}
+
+.table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-wrapper td {
+    padding: 10px;
 }
 
 .App > div {

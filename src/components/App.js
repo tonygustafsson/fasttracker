@@ -74,7 +74,9 @@ const App = () => {
     return (
         <div className="App">
             <Paper>
-                <Typography variant="h1">FastApp</Typography>
+                <Typography variant="h2" component="h1">
+                    FastApp
+                </Typography>
 
                 {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
 
@@ -88,29 +90,33 @@ const App = () => {
 
             {fasts.length > 0 && (
                 <Paper>
-                    <Typography variant="h2">Previous fasts</Typography>
+                    <Typography variant="h4" component="h2">
+                        Previous fasts
+                    </Typography>
 
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Start</TableCell>
-                                <TableCell>End</TableCell>
-                                <TableCell>Duration</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {fasts
-                                .slice()
-                                .reverse()
-                                .map(fast => (
-                                    <TableRow key={fast.start}>
-                                        <TableCell>{getTimeFromUnixStamp(fast.start)}</TableCell>
-                                        <TableCell>{getTimeFromUnixStamp(fast.end)}</TableCell>
-                                        <TableCell>{getHoursDifference(fast.start, fast.end)}</TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
+                    <div className="table-wrapper">
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Start</TableCell>
+                                    <TableCell>End</TableCell>
+                                    <TableCell>Duration</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {fasts
+                                    .slice()
+                                    .reverse()
+                                    .map(fast => (
+                                        <TableRow key={fast.start}>
+                                            <TableCell>{getTimeFromUnixStamp(fast.start)}</TableCell>
+                                            <TableCell>{getTimeFromUnixStamp(fast.end)}</TableCell>
+                                            <TableCell>{getHoursDifference(fast.start, fast.end)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </div>
                 </Paper>
             )}
         </div>
