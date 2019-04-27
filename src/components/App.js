@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { getUnixTimeStamp, getUnixTimeStampMs, getTimeFromUnixStamp, getHoursDifference, getTimeDifferenceFromNow } from '../helpers/time';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -16,52 +17,23 @@ const App = () => {
     const [currentFast, changeCurrentFast] = useLocalStorage('currentFast', {
         start: false
     });
-    const [tick, updateTick] = useState(moment().unix());
+    const [tick, updateTick] = useState(getUnixTimeStamp());
 
     useEffect(() => {}, [tick, currentFast.start]);
 
     setInterval(() => {
-        updateTick(moment().unix());
+        updateTick(getUnixTimeStamp());
     }, 1000);
 
-    const getUnixTimeStamp = () => {
-        return (
-            moment()
-                .unix()
-                .toString() * 1000
-        );
-    };
-
-    const getTimeFromUnixStamp = unix => {
-        return moment(unix).format('MMMM Do YYYY, h:mm:ss a');
-    };
-
-    const getHoursDifference = (start, end) => {
-        const delimiter = end - start > 60 * 60 * 1000 ? 'hours' : 'minutes';
-        return `${moment(end).diff(start, delimiter)} ${delimiter}`;
-    };
-
-    const getTimeDifferenceFromNow = start => {
-        const diff = moment().diff(start) / 1000;
-
-        if (diff > 60) {
-            return Math.floor(moment.duration(moment.now() - start).asMinutes()) + ' minutes';
-        } else if (diff > 3600) {
-            return Math.floor(moment.duration(moment.now() - start).asHours()) + ' hours';
-        } else {
-            return Math.floor(moment.duration(moment.now() - start).asSeconds()) + ' seconds';
-        }
-    };
-
     const toggleFast = () => {
-        var newStartValue = currentFast.start ? false : getUnixTimeStamp();
+        var newStartValue = currentFast.start ? false : getUnixTimeStampMs();
 
         if (currentFast.start) {
             addFast([
                 ...fasts,
                 {
                     start: currentFast.start,
-                    end: getUnixTimeStamp()
+                    end: getUnixTimeStampMs()
                 }
             ]);
         }
