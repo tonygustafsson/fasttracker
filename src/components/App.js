@@ -74,6 +74,7 @@ const App = () => {
     return (
         <div className="App">
             <Paper>
+                <img className="favicon" src="/img/favicon.png" alt="FastTracker icon" />
                 <Typography variant="h2" component="h1">
                     FastTracker
                 </Typography>
@@ -82,7 +83,7 @@ const App = () => {
 
                 {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
 
-                <Button size="large" variant="contained" color="primary" onClick={() => toggleFast()}>
+                <Button size="large" variant="contained" color="secondary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
                     {currentFast.start ? 'Stop fast' : 'Start fast'}
                 </Button>

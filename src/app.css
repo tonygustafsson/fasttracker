@@ -2,6 +2,7 @@ body {
     width: 98%;
     margin: 1em auto;
     font-size: 16px;
+    background: linear-gradient(to right, #fe8c00, #f83600);
 }
 
 @media (min-width: 1000px) {
@@ -18,11 +19,13 @@ body {
 
 .table-wrapper td {
     padding: 10px;
+    border-bottom: 1px red solid;
 }
 
 .App > div {
     margin: 1em;
     padding: 2em;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 button {
@@ -31,4 +34,11 @@ button {
 
 button svg {
     margin-right: 0.5em;
+}
+
+.favicon {
+    float: left;
+    width: 160px;
+    height: 160px;
+    margin-right: 3em;
 }
