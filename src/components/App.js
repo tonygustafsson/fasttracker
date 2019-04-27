@@ -75,7 +75,7 @@ const App = () => {
         <div className="App">
             <Paper>
                 <Typography variant="h2" component="h1">
-                    FastApp
+                    FastTracker
                 </Typography>
 
                 {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
