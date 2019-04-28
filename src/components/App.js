@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getUnixTimeStamp, getUnixTimeStampMs, getTimeFromUnixStamp, getHoursDifference, getTimeDifferenceFromNow } from '../helpers/time';
-
-import Settings from './Settings';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -14,6 +12,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
+const Settings = React.lazy(() => import('./Settings'));
 
 const App = () => {
     const [fasts, addFast] = useLocalStorage('fasts', []);
@@ -99,12 +99,14 @@ const App = () => {
                 </Paper>
             )}
 
-            <Settings
-                open={settingsDialogOpened}
-                changeOpen={changeSettingsDialogOpened}
-                hoursUntilNotify={hoursUntilNotify}
-                changeHoursUntilNotify={changeHoursUntilNotify}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+                <Settings
+                    open={settingsDialogOpened}
+                    changeOpen={changeSettingsDialogOpened}
+                    hoursUntilNotify={hoursUntilNotify}
+                    changeHoursUntilNotify={changeHoursUntilNotify}
+                />
+            </Suspense>
         </div>
     );
 };

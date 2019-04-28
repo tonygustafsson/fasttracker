@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 const Settings = props => {
     return (
-        <Dialog onClose={() => props.changeOpen()} open={props.open} aria-labelledby="responsive-dialog-title">
+        <Dialog open={props.open || false} onClose={() => props.changeOpen()} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">Settings</DialogTitle>
             <DialogContent>
                 <DialogContentText>Settings are automatically saved on change.</DialogContentText>
