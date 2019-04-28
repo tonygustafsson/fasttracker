@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getUnixTimeStamp, getUnixTimeStampMs, getTimeFromUnixStamp, getHoursDifference, getTimeDifferenceFromNow } from '../helpers/time';
 
+import Settings from './Settings';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,6 +21,8 @@ const App = () => {
         start: false
     });
     const [tick, updateTick] = useState(getUnixTimeStamp());
+    const [settingsDialogOpened, changeSettingsDialogOpened] = useState(false);
+    const [hoursUntilNotify, changeHoursUntilNotify] = useLocalStorage('hoursUntilNotify', 16);
 
     useEffect(() => {}, [tick, currentFast.start]);
 
@@ -50,14 +55,15 @@ const App = () => {
                 <Typography variant="h2" component="h1">
                     FastTracker
                 </Typography>
-
                 {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
-
                 {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
-
                 <Button size="large" variant="contained" color="secondary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
                     {currentFast.start ? 'Stop fast' : 'Start fast'}
+                </Button>{' '}
+                <Button size="large" variant="outlined" color="secondary" onClick={() => changeSettingsDialogOpened(true)}>
+                    <SettingsIcon />
+                    Settings
                 </Button>
             </Paper>
 
@@ -92,6 +98,13 @@ const App = () => {
                     </div>
                 </Paper>
             )}
+
+            <Settings
+                open={settingsDialogOpened}
+                changeOpen={changeSettingsDialogOpened}
+                hoursUntilNotify={hoursUntilNotify}
+                changeHoursUntilNotify={changeHoursUntilNotify}
+            />
         </div>
     );
 };
