@@ -19,33 +19,56 @@ export function register(config) {
             return;
         }
 
+        let registration = false;
+        let notificationsOk = false;
+
+        const sendNotification = () => {
+            if (!registration || !notificationsOk) return;
+
+            registration.showNotification('Vibration Sample', {
+                body: 'Buzz! Buzz!',
+                icon: '../images/touch/chrome-touch-icon-192x192.png',
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: 'vibration-sample'
+            });
+        };
+
+        const runFastCode = () => {
+            navigator.serviceWorker.ready.then(reg => {
+                console.log('Service worker is running!');
+                registration = reg;
+
+                Notification.requestPermission(function(result) {
+                    if (result === 'granted') {
+                        notificationsOk = true;
+                    }
+                });
+
+                let notifyAfterHours = JSON.parse(window.localStorage.getItem('hoursUntilNotify'));
+                let notifyTime = moment().add(notifyAfterHours, 'hours');
+
+                let interval = setInterval(() => {
+                    console.log(`User will be notified at ${notifyTime.toString()}`);
+
+                    if (moment().isSameOrAfter(notifyTime)) {
+                        sendNotification();
+                        clearInterval(interval);
+                    }
+                }, 60 * 100);
+            });
+        };
+
         window.addEventListener('load', () => {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
                 checkValidServiceWorker(swUrl, config);
-
-                // Add some additional logging to localhost, pointing developers to the
-                // service worker/PWA documentation.
-                navigator.serviceWorker.ready.then(() => {
-                    console.log('Service worker is running!');
-
-                    const notifyAfterHours = JSON.parse(window.localStorage.getItem('hoursUntilNotify'));
-                    console.log(`Will notify user after ${notifyAfterHours} hours.`);
-
-                    setInterval(() => {
-                        console.log('Check if user should be notified...');
-                        let notifyTime = moment().add(notifyAfterHours, 'hours');
-
-                        if (moment().isSameOrAfter(notifyTime)) {
-                            window.alert(`You have been fasting for ${notifyAfterHours} hours!`);
-                        }
-                    }, 60 * 1000);
-                });
+                runFastCode();
             } else {
                 // Is not localhost. Just register service worker
                 registerValidSW(swUrl, config);
+                runFastCode();
             }
         });
     }
