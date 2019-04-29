@@ -13,6 +13,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import Theme from '../theme';
+
 const Settings = React.lazy(() => import('./Settings'));
 
 const App = () => {
@@ -52,12 +54,12 @@ const App = () => {
         <div className="App">
             <Paper>
                 <img className="favicon" src="/img/favicon.png" alt="FastTracker icon" />
-                <Typography variant="h2" component="h1">
+                <Typography variant="h3" component="h1">
                     FastTracker
                 </Typography>
                 {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
                 {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
-                <Button size="large" variant="contained" color="secondary" onClick={() => toggleFast()}>
+                <Button size="large" variant="contained" color="primary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
                     {currentFast.start ? 'Stop fast' : 'Start fast'}
                 </Button>{' '}
@@ -111,4 +113,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Theme(App);

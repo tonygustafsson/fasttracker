@@ -1,6 +1,6 @@
 body {
     width: 98%;
-    margin: 1em auto;
+    margin: 1em auto !important;
     font-size: 16px;
     background: linear-gradient(to right, #fe8c00, #f83600);
 }
@@ -37,15 +37,17 @@ button svg {
 }
 
 .favicon {
-    float: left;
     width: 80px;
     height: 80px;
-    margin-right: 3em;
+    margin: 0 auto 20px auto;
+    display: block;
 }
 
 @media (min-width: 1000px) {
     .favicon {
+        float: left;
         width: 160px;
         height: 160px;
+        margin-right: 3em;
     }
 }
