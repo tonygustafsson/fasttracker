@@ -12,9 +12,9 @@ const theme = createMuiTheme({
             dark: red[700]
         },
         secondary: {
-            light: pink[300],
-            main: pink[500],
-            dark: pink[700]
+            light: pink[100],
+            main: pink[300],
+            dark: pink[500]
         }
     },
     typography: {

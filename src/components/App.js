@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SettingsIcon from '@material-ui/icons/Settings';
+import CodeIcon from '@material-ui/icons/Code';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -57,21 +58,17 @@ const App = () => {
                 <Typography variant="h3" component="h1">
                     FastTracker
                 </Typography>
-                {currentFast.start && <Typography variant="h4">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
-                {!currentFast.start && <Typography variant="h4">No fast started.</Typography>}
+                {currentFast.start && <Typography variant="h5">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
+                {!currentFast.start && <Typography variant="h5">No fast started.</Typography>}
                 <Button size="large" variant="contained" color="primary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
                     {currentFast.start ? 'Stop fast' : 'Start fast'}
                 </Button>{' '}
-                <Button size="large" variant="outlined" color="secondary" onClick={() => changeSettingsDialogOpened(true)}>
-                    <SettingsIcon />
-                    Settings
-                </Button>
             </Paper>
 
             {fasts.length > 0 && (
                 <Paper>
-                    <Typography variant="h4" component="h2">
+                    <Typography variant="h5" component="h2">
                         Previous fasts
                     </Typography>
 
@@ -100,6 +97,24 @@ const App = () => {
                     </div>
                 </Paper>
             )}
+
+            <Paper>
+                <Button size="large" variant="contained" color="secondary" onClick={() => changeSettingsDialogOpened(true)}>
+                    <SettingsIcon />
+                    Settings
+                </Button>
+                <Button
+                    size="large"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                        window.location.href = 'https://github.com/tonygustafsson/fasttracker';
+                    }}
+                >
+                    <CodeIcon />
+                    GitHub
+                </Button>{' '}
+            </Paper>
 
             <Suspense fallback={<div>Loading...</div>}>
                 <Settings

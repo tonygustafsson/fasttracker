@@ -17,9 +17,10 @@ body {
     overflow-x: auto;
 }
 
-.table-wrapper td {
+.table-wrapper td,
+.table-wrapper th {
     padding: 10px;
-    border-bottom: 1px red solid;
+    border-bottom: 1px #f44336 solid;
 }
 
 .App > div {
@@ -29,7 +30,14 @@ body {
 }
 
 button {
+    width: 100%;
     margin: 1em 0 !important;
+}
+
+@media (min-width: 1000px) {
+    button {
+        width: auto !important;
+    }
 }
 
 button svg {
