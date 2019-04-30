@@ -37,6 +37,7 @@ button {
 @media (min-width: 1000px) {
     button {
         width: auto !important;
+        margin: 1em !important;
     }
 }
 
