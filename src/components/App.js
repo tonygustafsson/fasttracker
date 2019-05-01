@@ -1,6 +1,14 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { getUnixTimeStamp, getUnixTimeStampMs, getTimeFromUnixStamp, getHoursDifference, getTimeDifferenceFromNow } from '../helpers/time';
+import {
+    getUnixTimeStamp,
+    getUnixTimeStampMs,
+    getCalendarTimeFromUnix,
+    getTimeFromUnixStamp,
+    getHoursDifference,
+    getTimeDifferenceFromNow,
+    getUnixTimeInFuture
+} from '../helpers/time';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -25,7 +33,7 @@ const App = () => {
     });
     const [tick, updateTick] = useState(getUnixTimeStamp());
     const [settingsDialogOpened, changeSettingsDialogOpened] = useState(false);
-    const [hoursUntilNotify, changeHoursUntilNotify] = useLocalStorage('hoursUntilNotify', 16);
+    const [notifyTime, changeNotifyTime] = useLocalStorage('notifyTime', getUnixTimeInFuture(16));
 
     useEffect(() => {}, [tick, currentFast.start]);
 
@@ -58,7 +66,14 @@ const App = () => {
                 <Typography variant="h3" component="h1">
                     FastTracker
                 </Typography>
-                {currentFast.start && <Typography variant="h5">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>}
+                {currentFast.start && (
+                    <>
+                        <Typography variant="h5">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>
+                        <Typography variant="h5">
+                            You will be done in {getTimeDifferenceFromNow(notifyTime)}, {getCalendarTimeFromUnix(notifyTime)}
+                        </Typography>
+                    </>
+                )}
                 {!currentFast.start && <Typography variant="h5">No fast started.</Typography>}
                 <Button size="large" variant="contained" color="primary" onClick={() => toggleFast()}>
                     <AccessTimeIcon />
@@ -117,12 +132,7 @@ const App = () => {
             </Paper>
 
             <Suspense fallback={<div>Loading...</div>}>
-                <Settings
-                    open={settingsDialogOpened}
-                    changeOpen={changeSettingsDialogOpened}
-                    hoursUntilNotify={hoursUntilNotify}
-                    changeHoursUntilNotify={changeHoursUntilNotify}
-                />
+                <Settings open={settingsDialogOpened} changeOpen={changeSettingsDialogOpened} notifyTime={notifyTime} changeNotifyTime={changeNotifyTime} />
             </Suspense>
         </div>
     );

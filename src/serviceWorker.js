@@ -25,8 +25,8 @@ const runFastCode = () => {
             }
         });
 
-        let notifyAfterHours = JSON.parse(window.localStorage.getItem('hoursUntilNotify'));
-        let notifyTime = moment().add(notifyAfterHours, 'hours');
+        let notifyAfterHours = JSON.parse(window.localStorage.getItem('notifyTime'));
+        let notifyTime = moment(notifyAfterHours);
 
         let interval = setInterval(() => {
             console.log(`User will be notified at ${notifyTime.toString()}`);

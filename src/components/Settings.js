@@ -8,6 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 
+import { getUnixTimeInFuture, getHoursUntilUnix } from '../helpers/time';
+
 const Settings = props => {
     return (
         <Dialog open={props.open || false} onClose={() => props.changeOpen()} aria-labelledby="responsive-dialog-title">
@@ -20,8 +22,10 @@ const Settings = props => {
                         id="notify-hours"
                         type="number"
                         label="Notify after"
-                        value={props.hoursUntilNotify}
-                        onChange={e => props.changeHoursUntilNotify(e.target.value)}
+                        value={getHoursUntilUnix(props.notifyTime)}
+                        onChange={e => {
+                            props.changeNotifyTime(getUnixTimeInFuture(e.target.value));
+                        }}
                         margin="normal"
                         helperText="Hours"
                     />
