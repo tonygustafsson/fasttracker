@@ -8,7 +8,7 @@ specific and you cannot yet move info from your phone to your desktop.
 
 It based on React (with hooks) and uses service workers to create a progressive web app.
 
-This is **not** for every day use yet.
+This is not for every day use yet.
 
 ## Screenshot
 
@@ -16,4 +16,4 @@ This is **not** for every day use yet.
 
 ## Demo
 
-You can try it out on [fasttracker.online](https://www.fasttracker.online 'FastTracker.online')
+You can try it out on [tonyg.se/projects/fasttracker](https://www.tonyg.se/projects/fasttracker 'FastTracker')
