@@ -24,4 +24,4 @@ yarn-error.log*
 
 # Project specific
 *.lock
-package-lock.json
+
