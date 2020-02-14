@@ -62,7 +62,7 @@ const App = () => {
     return (
         <div className="App">
             <Paper>
-                <img className="favicon" src="/img/favicon.png" alt="FastTracker icon" />
+                <img className="favicon" src="img/favicon.png" alt="FastTracker icon" />
                 <Typography variant="h3" component="h1">
                     FastTracker
                 </Typography>
