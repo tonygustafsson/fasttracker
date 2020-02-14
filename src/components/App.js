@@ -68,9 +68,12 @@ const App = () => {
                 </Typography>
                 {currentFast.start && (
                     <>
-                        <Typography variant="h5">You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}</Typography>
                         <Typography variant="h5">
-                            You will be done in {getTimeDifferenceFromNow(notifyTime)}, {getCalendarTimeFromUnix(notifyTime)}
+                            You have been fasting for {getTimeDifferenceFromNow(currentFast.start)}
+                        </Typography>
+                        <Typography variant="h5">
+                            You will be done in {getTimeDifferenceFromNow(notifyTime)},{' '}
+                            {getCalendarTimeFromUnix(notifyTime)}
                         </Typography>
                     </>
                 )}
@@ -114,7 +117,12 @@ const App = () => {
             )}
 
             <Paper>
-                <Button size="large" variant="contained" color="secondary" onClick={() => changeSettingsDialogOpened(true)}>
+                <Button
+                    size="large"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => changeSettingsDialogOpened(true)}
+                >
                     <SettingsIcon />
                     Settings
                 </Button>
@@ -132,7 +140,12 @@ const App = () => {
             </Paper>
 
             <Suspense fallback={<div>Loading...</div>}>
-                <Settings open={settingsDialogOpened} changeOpen={changeSettingsDialogOpened} notifyTime={notifyTime} changeNotifyTime={changeNotifyTime} />
+                <Settings
+                    open={settingsDialogOpened}
+                    changeOpen={changeSettingsDialogOpened}
+                    notifyTime={notifyTime}
+                    changeNotifyTime={changeNotifyTime}
+                />
             </Suspense>
         </div>
     );
